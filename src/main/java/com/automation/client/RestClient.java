@@ -18,13 +18,17 @@ public class RestClient {
         CloseableHttpClient httpClient =   HttpClients.createDefault(); //Creating http connection
         HttpGet httpGet = new HttpGet(url); //http get request
         CloseableHttpResponse closeableHttpResponse =  httpClient.execute(httpGet); //hit the request as similar to Postman Send button
+
+       // a. Status code
         int statusCode = closeableHttpResponse.getStatusLine().getStatusCode();
         System.out.println("Status Code: " +statusCode);
 
+       // b. JSON String
         String responseString = EntityUtils.toString(closeableHttpResponse.getEntity(), "UTF-8");
         JSONObject responseJson = new JSONObject(responseString);
         System.out.println("Response JSON from API" +responseJson);
 
+       // c. All headers
         Header[] headersArray = closeableHttpResponse.getAllHeaders();
         HashMap<String, String> allHeaders = new HashMap<String, String>();
         for (Header header: headersArray) {
